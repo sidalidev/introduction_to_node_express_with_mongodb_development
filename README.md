@@ -1,11 +1,5 @@
-# Introduction to Node, Express and MongoDB Development
+# 0. Welcome to the course
+Congratulations, you did well till here, but this is only the beginning.
+![Link leveling up](https://i.pinimg.com/originals/2c/62/ba/2c62ba3409104b8379ee33e8944c625c.png) 
 
-This repository is the flow of our course. Each branch is a step of the course, and you can follow up simply by checking-out each step, example:
 
-```bash
-# Clone this project
-git clone https://github.com/sidbentifraouine/introduction_to_node_and_express_and_mongodb_development 
-
-# Wanna go to step #5 ? just do
-git checkout 0.welcome_to_the_course
-```
