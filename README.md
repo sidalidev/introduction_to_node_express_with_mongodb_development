@@ -98,3 +98,31 @@ For the moment, let’s just use `res` and **answer** the request.
 Now, if we refresh our **web browser** and refresh, then go back to our **terminal** we can see that is **logged** “/“. This is the requested url.
 Now, visit http://localhost:3000/bresiloupas, and go back to the **terminal**: we see “/bresiloupas” 🇧🇷. And this is the cycle of… not **Life** but the **Request and Respond Cycle** 🌎
 
+### 1.3.1 More on Request and Response
+Open our `server.js` file again and copy/paste the following code snippet:
+```javascript
+const http = require("http");
+
+const server = http.createServer((req, res) => {
+  if (req.url === "/about") {
+    res.end("The about page")
+  } else if (req.url === "/contact") {
+    res.end("The contact page")
+  } else if (req.url === "/") {
+    res.end("The home page")
+  } else {
+    res.writeHead(404)
+    res.end("page not found")
+  }
+})
+
+server.listen(3000) 
+```
+We can now restart the server by going to the terminal:
+- hit **CTRL + C** to kill the **node** process
+- type `node server.js` and here we go again!
+
+Using an *if-else*statement in the callback function, we check for the request url and depending on its path, we response with different messages. If the url contains ‘ /about ’ , we serve the *about*page. If it contains ‘ /contact ’ , we serve the *contact*page and if it ’ s just ‘ / ’ , we serve the *home*page. If the path does not exist in the *if-else*, we default to the last *else*clause and respond with ‘ page not found ’ and also `writeHead(404)`. 
+
+`writeHead` writes the status code of the request. Normally, a status code of `200` indicates that the server responded with a successful response. 
+
