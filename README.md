@@ -1,156 +1,48 @@
-# Introduction to Node, Express and MongoDB Development
-# 1. Introduction to Node
-## 1.1 What is Node ?
-### 1.1.1 Popularity
-Node (or Node.js) is one of the most popular server-side frameworks. It's used and backed by huge companies like YouTube, Paypal, Netflix and so on...
+# 2. Introduction to npm and Express
+## Installing Custom Packages with `npm`
+In the first part, we imported only **Node** built-in packages like: `http`, `fs`. Now let’s have some fun with the large range of packages that the community offers.
 
-### 1.1.2 The internet and server-side languages
-Before entering into Node, let us see a very simplified version on how the internet works:
-1. I open my Browser
-2. I hit: www.9gag.com (for work purpose of course! 😅)
-3. www.9gag.com replies with an HTML file
+The packages are hosted in a site called **npmjs.com**. You can search for any package, read its doc and so on.
 
-I don't work at **9gag** so I could not tell you how they did that, but one thing for sure is that: there have been a server-side programming language, maybe it is PHP... Ruby (❤️), Python... whatever.
+We  said before that vanilla **Node** apps can be difficult to write and maintain and we talked about **Express**. **Express** will be one of those packages that we will install from **npm**.
 
-That server-side language runs on a **Server**, and that language is responsible for taking care of my request and give me back what I asked for.
-
-### 1.1.3 Is Node just JavaScript ?
-**Node** is one of those server-side languages. You'll soon tell me: "Oh, isn't it just JavaScript ? 🤓".
-The answer is "Yes and No". 
-
-Traditionally, JavaScript runs only on a Web browser. But in 2009, **Node** took V8, which is the **Google Chrome**’s JavaScript engine, and used it to run **JavaScript** on servers.
-
-#### 1.1.4 What differentiates Node and JavaScript ?
-The simple word is **API**s, **Node** and **JavaScript** are almost the same but we need to remember that:
-##### JavaScript runs on a Web browser
-- No access to file system ❌
-- Cannot run bash commands ❌
-
-##### Node runs on the Server (the computer itself)
-- No access to the DOM (window, document…etc…) ❌
-- Can run bash commands ✅
-- Has access to file system ✅
-
-## 1.2 Why use Node ?
-- The usage of **V8 JavaScript** Engine makes **Node** performant language
-- It encourages **asynchronous**, which makes **concurrency management** easier because we don’t have to use **multithreads** 
-- **Less to learn, less to do**: using **JavaScript** on the **front-end** and **Node** on the **back-end** will make our cerebral working memory  lighter because it’s the same **Core language**
-
-## 1.3 Installation
-The goal here is to make sure that you can run those two commands
+## Introduction to Express 
+**Express** is a framework that acts as a light layer on top of **Node**. It make our life easier by providing helpful features, organising our application functionalities with middleware, routing, dynamic HTML views and more.
+### Installation
+#### Project initialisation feat.`package.json`
+Before hand, we’ll need to initialise the project with this command:
 ```bash
-node --version # mine shows: v14.17.5
-npm --version  # mine shows: 6.14.14
+npm init # and say yes to everything it asks for
 ```
-Installation instructions are [here](https://nodejs.org/en/download/)
+This will initialise our project and create a `package.json` file. This file will contain all our project configuration, from the name, the dependencies (packages that it needs to run) and more.
 
-## 1.3 Our first Node server
-Create a new file called `server.js` , then open your code editor and copy and paste-in the following code snippet
-```javascript
-const http = require('http')
- const server = http.createServer((req, res) => { 
-  console.log(req.url) 
-  res.end('Hello World')
-})
-
-server.listen(3000) 
-```
-
-Everything is done, make sure you did that little `control + S` 😀 then open your terminal and hit:
+Then, simply hit:
 ```bash
-# Start the server
-node server.js
+npm install express
 ```
-You see the magic? 🪄
-Not yet I guess… 😅
+When finished, you’ll see that it has added a line inside `package.json` under `dependencies`. 
 
-Go to your web browser and enter this URL http://localhost:3000/
+Dependencies contain the dependency packages and their version numbers. Each time we install a package, **npm** saves it here to keep track of the packages used in our app. 
 
+#### Project dependencies feat. `node_modules/`
+If you open and explore `node_modules/`, you should be able to locate the `express/`package. The reason why we see many other packages in `node_modules/` even though we only installed `express`is because `express` depends on these other packages and they were installed when `express` was installed. These other packages are dependencies of Express. The file `package-lock.json` tracks the versions of all the dependencies of Express. 
 
-### 1.3.1 Code explanation
+### 2.1. Intro
+An example is better than any other word, let us code!
+Replace the content of our `server.js` file with:
 ```javascript
-const http = require('http')
+const express = require('express')
 ```
+This will pull `express` from `node_modules/` directory.
 
-The `require` **function** is a built-in **Node** package which lets us grab various other built-in or custom files and libraries.
-
-The `http`  **package** (or **library**) is **required**(or **imported**) and assigned to a variable called **http**(we could have called it **bunny** if we wanted 😄), this is kind of a convention to give it the variable the same name as the **package** or **module** or **library** (these three words mean the same thing) we import.
-
-So what does `http` allows us to do ?
-`http` provides us tools to work on the server, for example: 
-- Creating the server
-- Starting the server
-- Listening to a specific port
-
+We will implement the same features we did before but this time… we will use **Express** !
 ```javascript
-const server = http.createServer((req, res) => { 
-  console.log(req.url) 
-  res.end('Hello World')
-})
-```
-Here, we create a server with the `http`’s function `createServer`. The `createServer` function takes a function as a parameter.
+const express = require('express')
+const app = express() // starts a new Express app
 
-The function we provided to `createServer` is called a **callback**. A **callback** is simply a function that we be **called** by another function.
-
-`createServer` will call that function and pass-in two parameters `req` and `res`, one stands for **request** and the other for **response**, those will be very helpful. 
-For the moment, let’s just use `res` and **answer** the request.
-
-Now, if we refresh our **web browser** and refresh, then go back to our **terminal** we can see that is **logged** “/“. This is the requested url.
-Now, visit http://localhost:3000/bresiloupas, and go back to the **terminal**: we see “/bresiloupas” 🇧🇷. And this is the cycle of… not **Life** but the **Request and Respond Cycle** 🌎
-
-### 1.3.2 More on Request and Response
-Open our `server.js` file again and copy/paste the following code snippet:
-```javascript
-const http = require("http");
-
-const server = http.createServer((req, res) => {
-  if (req.url === "/about") {
-    res.end("The about page")
-  } else if (req.url === "/") {
-    res.end("The home page")
-  } else {
-    res.writeHead(404)
-    res.end("page not found")
-  }
-})
-
-server.listen(3000) 
-```
-We can now restart the server by going to the terminal:
-- hit **CTRL + C** to kill the **node** process
-- type `node server.js` and here we go again!
-
-Using an *if-else*statement in the callback function, we check for the request url and depending on its path, we response with different messages. If the url contains ‘ /about ’ , we serve the *about*page. If it contains ‘ /contact ’ , we serve the *contact*page and if it ’ s just ‘ / ’ , we serve the *home*page. If the path does not exist in the *if-else*, we default to the last *else*clause and respond with ‘ page not found ’ and also `writeHead(404)`. 
-
-`writeHead` writes the status code of the request. Normally, a status code of `200` indicates that the server responded with a successful response. 
-
-### 1.3.2 Responding with HTML
-Let’’s be more serious and send back good old HTML files 😄. We’ll create a folder and call it mhmm, how about `pages/` and create our **Home**, **About** and **404** pages.
-
-We need now to import those files in order to use them:
-```javascript
-const fs = require('fs')
- const homePage = fs.readFileSync('./pages/home.html') const aboutPage = fs.readFileSync('./pages/about.html') const notFoundPage = fs.readFileSync('./pages/404.html') 
-```
-`fs` lets us interact with files.
-
-And replace our responses:
-
-```javascript
-const server = http.createServer((req, res) => {
-  if (req.url === "/about") {
-    res.end(aboutPage)
-  } else if (req.url === "/") {
-    res.end(homePage)
-  } else {
-    res.writeHead(404)
-    res.end(notFoundPage)
-  }
+app.listen(3000, () => {
+	console.log('App listening on port 3000')
 })
 ```
 
-To summarise this:
-- One simple function that handles every request to our API
-- The function takes `req` and `res` parameters and we decide how to `res`pond given what is `req`uested ✅
-
-But, this doesn’t scale well with huge application with many routes, we’ll explore next, how to simplify this by using a library on top of Node.
+See ? No `http` import of something… **Express** will take care of everything for us 🚀.
