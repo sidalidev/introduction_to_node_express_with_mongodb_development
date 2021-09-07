@@ -147,4 +147,32 @@ app.get("*", (req, res) => {
 ```
 We only covered `GET` requests for the moment by in the next days, we will do more with `POST`, `PUT`, `DELETE` 🚀
 
+### Serving Static Files with Express 
+Each `HTML` page comes with it’s content and stuff, but often you’ll need to refer to `CSS`, `JS` which can be written in the template itself or fetched from a **CDN** or our **Server**, just like this:
+```html
+<link rel="stylesheet" href="css/home.css"> 
+<h1>Welcome Home!</h1>
+```
 
+To make this work, we need to use a **middleware** (we’ll walk about this later:
+```javascript
+//...
+
+app.use(express.static('public')) // our Middleware
+
+// GET /
+app.get("/", (req, res) => {
+//...
+})
+
+//...
+```
+
+`express.static`is a packaged shipped with Express that helps us serve static files. With `express.static('public')` we **specify** that **any request that ask for assets** should **get it from** the `public/`  directory 
+
+The same goes with **JavaScript** assets:
+```html
+<link rel="stylesheet" href="css/home.css"> 
+<script src="js/home.js"></script>
+<h1>Welcome Home!</h1>
+```

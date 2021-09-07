@@ -4,6 +4,7 @@ const app = express() // starts a new Express app
 
 const pagesDirectory = `${__dirname}/pages` // equivalent to __dirname + '/pages'
 
+app.use(express.static('public'))
 // GET /
 app.get("/", (req, res) => {
   res.sendFile(path.resolve(pagesDirectory,'home.html'))
@@ -17,6 +18,7 @@ app.get("/about", (req, res) => {
 
 // GET /adlsfalsdfjk
 app.get("*", (req, res) => {
+  res.statusCode(404)
   res.sendFile(path.resolve(pagesDirectory,'404.html'))
 })
 
