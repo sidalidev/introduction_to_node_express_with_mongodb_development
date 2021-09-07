@@ -74,3 +74,32 @@ We can see that the `API` is similar to **vanilla Node** but slightly different,
 
 **No more** `if…else…` like we did in **vanilla Node**, this is much simpler.
 **Each request** has its **own handler**.
+
+#### Send back `HTML` files
+For this, we’re going to use the `path` module, who’s that Pokémon ?!
+```javascript
+const path = require('path')
+```
+`path` is a **Node built-in library**, and it provides us tools for **resolving** paths. 
+
+By using it that way:
+```javascript
+path.resolve(__dirname,'index.html') 
+```
+`path.resolve` function will return us the **right** absolute path to the resource by taking care of **OS** differences: **Windows** and **Mac**/**Linux** are not written the same way. You know… the `/` vs `\` thing 😅.
+
+Let us replace our `JSON` response in our `GET /` request by a good old `HTML` response:
+```javascript
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/pages','home.html'))
+})
+```
+
+**Don’t forget** to save, stop `node` **process** in your terminal and start over to see changes.
+
+If you do a `console.log` of what return the `path.resolve` function you’ll see this for example (in my machine):
+`/Users/sid/Code/introduction_to_node_express_with_mongodb_development/pages/home.html`
+
+So, basically, this is saying, OK `res.sendFile('my/file/is/here/home.html)`
+
+This is so much simpler be cause in **Node** you’d write more line to do the same thing.
