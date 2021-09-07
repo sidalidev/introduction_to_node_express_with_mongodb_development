@@ -123,4 +123,28 @@ That is, if a request for ‘`/ ` and `/about` **comes in together,** it **doesn
 
 It can be that the task to **query the database** starts and while the database is thinking, the second request for `about.html` can be responded. Our code is not doing two things at once, but when a task is waiting on something, the other task can execute. **Asynchronous** code like **callback functions** thus execute much faster. 
 
+### 2.4. Serving Other HTML files 
+
+Let’s implement others routes simply by adding:
+```javascript
+const pagesDirectory = `${__dirname}/pages` // equivalent to __dirname + '/pages'
+
+// GET /
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(pagesDirectory,'home.html'))
+})
+
+// GET /about
+app.get("/about", (req, res) => {
+  res.sendFile(path.resolve(pagesDirectory,'about.html'))
+})
+
+
+// GET /adlsfalsdfjk a.k.a Everything that is no matched above
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(pagesDirectory,'404.html'))
+})
+```
+We only covered `GET` requests for the moment by in the next days, we will do more with `POST`, `PUT`, `DELETE` 🚀
+
 
