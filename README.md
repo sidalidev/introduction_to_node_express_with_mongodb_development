@@ -103,3 +103,24 @@ If you do a `console.log` of what return the `path.resolve` function you’ll se
 So, basically, this is saying, OK `res.sendFile('my/file/is/here/home.html)`
 
 This is so much simpler be cause in **Node** you’d write more line to do the same thing.
+
+### 2.3. Asynchronous with Call Back Functions 
+We have been seeing a few examples of code with callback functions. Callback functions are an important aspect in **Node**. that helps support tasks to be done asynchronously. That is, rather than waiting for one task to complete before executing another e.g. in **PHP**:
+ 
+Task 1 -> Task 2 -> Task 3 -> Task 4 -> Completion 
+
+**Node** allows the possibility to performs tasks in parallel, where no task is blocking another. 
+Task 1 -> Task 2 -> Task 3 -> Task 4 -> 
+How **Node** supports asynchronous code is with **callback functions**. For example, the below request handlers do not have to be executed **synchronously**. 
+```javascript
+app.get('/', (req, res) => { // query database 
+}) 
+app.get('/about',(req, res) => { res.sendFile(path.resolve(__dirname + '/pages/','about.html')) 
+}) 
+```
+
+That is, if a request for ‘`/ ` and `/about` **comes in together,** it **doesn’t have** to be the case that **one request** has to **be completed** before **serving the other**. **Both** tasks **can begin** at the **same time**.
+
+It can be that the task to **query the database** starts and while the database is thinking, the second request for `about.html` can be responded. Our code is not doing two things at once, but when a task is waiting on something, the other task can execute. **Asynchronous** code like **callback functions** thus execute much faster. 
+
+
