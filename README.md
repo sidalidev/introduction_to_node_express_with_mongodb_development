@@ -25,7 +25,14 @@ When finished, you’ll see that it has added a line inside `package.json` under
 Dependencies contain the dependency packages and their version numbers. Each time we install a package, **npm** saves it here to keep track of the packages used in our app. 
 
 #### Project dependencies feat. `node_modules/`
-If you open and explore `node_modules/`, you should be able to locate the `express/`package. The reason why we see many other packages in `node_modules/` even though we only installed `express`is because `express` depends on these other packages and they were installed when `express` was installed. These other packages are dependencies of Express. The file `package-lock.json` tracks the versions of all the dependencies of Express. 
+If you open and explore `node_modules/`, you should be able to locate the `express/`package. The reason why we see many other packages in `node_modules/` even though we only installed `express`is because `express` depends on these other packages and they were installed when `express` was installed. These other packages are dependencies of Express. The file `package-lock.json` tracks the versions of all the dependencies of Express.
+
+##### Note
+Don’t forget to create a `.gitignore` file in your project with content
+```
+node_modules/
+``` 
+This will make `git` **ignore** the folder, because sometimes it can be larger than 100mb and we don’t want to push that kind of folder.
 
 ### 2.1. Intro
 An example is better than any other word, let us code!
@@ -46,3 +53,24 @@ app.listen(3000, () => {
 ```
 
 See ? No `http` import of something… **Express** will take care of everything for us 🚀.
+
+### 2.2. Requests with Express
+Each client request can be handled simply by using  those main verbs: `get`, `post`, `put`, `delete`
+
+#### Example: I want to send a `JSON` response for everyone who will fetch at `/` 
+```javascript
+app.get("/", (req, res) => {
+  res.json({
+    name: "Louis croix-vé-bâton"
+  })
+})
+```
+
+We can see that the `API` is similar to **vanilla Node** but slightly different, the `get` function takes two parameters:
+- Which route ?
+- Which function do you want me to call when a `get` request happens ? I’ll call it with:
+	-  a `req` **object**, in order to  give you all the **request’s** informations
+	- a `res` **object** in order for you to call it so we can give an answer back
+
+**No more** `if…else…` like we did in **vanilla Node**, this is much simpler.
+**Each request** has its **own handler**.
