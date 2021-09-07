@@ -1,0 +1,24 @@
+{
+  "name": "introduction_to_node_express_with_mongodb_development",
+  "version": "1.0.0",
+  "description": "In the first part, we imported only **Node** built-in packages like: `http`, `fs`. Now let’s have some fun with the large range of packages that the community offers.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sidbentifraouine/introduction_to_node_express_with_mongodb_development.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sidbentifraouine/introduction_to_node_express_with_mongodb_development/issues"
+  },
+  "homepage": "https://github.com/sidbentifraouine/introduction_to_node_express_with_mongodb_development#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
