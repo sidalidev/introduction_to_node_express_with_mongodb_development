@@ -1,161 +1,75 @@
-# 3. Introduciton to MongoDB and Mongoose
-We will use MongoDB as the backend database for our app. You can of course use other solutions to persist your application data e.g. in files, in a relational SQL database, or in another kind of storage mechanism. In this chapter, we will cover the popular MongoDB for database storage.
+## 📱‍ The Project: Delivecrous
 
-MongoDB is a NoSQL database. Before we talk about what is a NoSQL database, let ’ s first tall about relational databases so that we can provide a meaningful contrast. If you have not heard of a relational database before, you can think of relational databases like spreadsheets where data is structured and each entry is generally a row in a table. Relational databases are generally controlled with SQL or Structured Query Language. Examples of popular relational databases are MySQL, SQL Server and PostgreSQL.
+### The app
 
-NoSQL databases are often called non-relational databases, where NoSQL means anything that isn ’ t an SQL (see how it infers the popularity of SQL?). It might seem like NoSQL is a protest over SQL but it actually refers to a database not structured like a spreadsheet, i.e. less rigid than SQL databases.
-So, why use Mongo? Firstly, it is popular and that means there is plenty of help online, Secondly, it is mature being around since 2007 and used by companies like eBay, Craigslist and Orange.
+Feel free to change the subject, instead of Food you can take Pokemons, Street Fighter caracters. Anything that can help you have fun with the project is welcomed ❤️
 
-## Architecture of MongoDB
-As mentioned, the architecture of MongoDB is a NoSQL database which stores information in the form of collections and documents. MongoDB stores one or more collections. A collection represents a single entity in our app, for example in an e-commerce app, we need entities like categories, users, products. Each of these entity will be a single collection in our database.
+You're going to work on the **Backend** of the designed **UI**
 
-A collection then contain documents. A document is an instance of the entity containing the various relevant fields to represent the document. For example, a product document will contain name, image and price fields. Each field is a key-value pair. Documents look a lot like JSON objects with various properties (though they are technically Binary JSON or BSON). An example of a collection-document tree is shown below:
+#### Mockups
 
-```
-Database
-    → Products collection
-        → Product document {
-        price: 26,
-        title: "Learning Node",
-        description: "Top Notch Development book", expiry date: 27-3-2020
-        }
-        → Product document
-        ...
+Go [here](https://www.figma.com/file/ryU2PDYNX8y1yFd2QWX96V/DeliveCROUS?node-id=0%3A1)
 
-    → Users collection
-        → User document {
-        username: "123xyz", contact:
-        {
-        phone: "123-456-7890", email: "xyz@example.com"
-        } }
-        → User document ...
-```
+##### Prototype
 
-## Machine preparation
-In order to connect to a our Database, we need to have one running in our machine. So, follow instruction here: [Install MongoDB Community Edition — MongoDB Manual](https://docs.mongodb.com/manual/administration/install-community/)
+Go [Here](https://www.figma.com/proto/ryU2PDYNX8y1yFd2QWX96V/DeliveCROUS?node-id=5%3A3&viewport=230%2C361%2C0.3616926670074463&scaling=scale-down)
 
-## Mongoose
-[Mongoose](https://mongoosejs.com/) provides a straight-forward, schema-based solution to model your application data. It includes built-in type casting, validation, query building, business logic hooks and more, out of the box.
+#### Functionalities
 
-```bash
-npm install mongoose
-```
+##### Menu Screen
 
+- List the available dishes
+- I can select a dish, which will add it to my shopping cart
 
-Then import **Mongoose**
-```javascript
-const mongoose = require("mongoose")
-```
+##### Dish
 
+A dish should have at least the following properties - Name - Description - Price - Allergens Feel free to add any information that you think will be helpful.
 
-Do not forget to use **bodyParser** after having it installed:
+##### Dish Details Screen
 
-In your terminal:
-```bash
-npm install -D body-parser
-```
+Should show the details of a Dish in one Screen, or a Modal.
 
-In your code editor:
-```javascript
-const bodyParser = require("body-parser")
+##### Shopping Cart Screen
 
-app.use(bodyParser.json())
-```
+- Lists all selected Dishes
+- The user can unselect a Dish, which will remove it from the screen
 
-**bodyParser** will let **Express** parse `JSON` body of a request.
+##### Success Screen
 
-### Connect to our database
-In your code editor:
-```javascript
-mongoose.connect("mongodb://localhost:27017/test")
-```
+- Simple success screen to tell the user that everything went fine
 
-### Mongoose Model
-Lets create a model
-	 - Called: **Kitten**
-	 - Has these properties: 
-		 - name
-```javascript
-const Kitten = mongoose.model("Kitten", { name: String })
-```
+### Backend (Your JOB)
 
-Just for sake of testing, lets instantly create a new **kitten** called **Le chat**
-```javascript
-const kittenToSave = new Kitten({ name: "Le chat" })
-kittenToSave.save().then((kitten) => res.json(kitten))
-```
+- Route for fetching available **Dishes**. e.g: `GET /dishes`
+- Route to fetch a specific **Dish**. e.g: `GET /dish/1`
 
+- Route to add/remove a dish into the **Cart**. e.g: `PUT /cart with { id: 1, name: 'Kebab', price: 21 }` or `POST /cart/1` / `DELETE /cart/1`. See: [Subdocuments](https://mongoosejs.com/docs/subdocs.html) for help
+- Route to list **Cart** Items. e.g: `GET /cart`
 
-### The whole file should look like this
-```javascript
-const express = require("express")
-const bodyParser = require("body-parser")
-const mongoose = require("mongoose")
+- Route to finalize my choice with my address.
 
-const app = express()
+- The Challenge
+  - User sign-in with JSON Web Token
+  - Fetching dishes that contains a text
 
-app.use(bodyParser.json())
+**YOU DO NOT** need to handle the view part, only `JSON` is required here.
 
-mongoose.connect("mongodb://localhost:27017/test")
+### Your Report
 
-const Kitten = mongoose.model("Kitten", { name: String })
-kittenToSave.save().then((kitten) => res.json(kitten))
+After choosing your **Group** and **Finished your project**, you'll have to write a report of max **10 pages** which covers:
 
-// TO BE COMPLETED...
-app.listen(3000)
-```
+- Your conception
+- Pros & Cons of using **Node** and **Express**
+- Explain what you did in your **code** and **why**
+- A Conclusion
 
-#### The file completed
-```javascript
-const express = require("express")
-const bodyParser = require("body-parser")
-const mongoose = require("mongoose")
+You can also add your **Postman** testing requests by exporting it: see [Exporting a Postman collection](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#exporting-collections)
 
-const app = express()
+## You must send me
 
-app.use(bodyParser.json())
+- A link to your (ACCESSIBLE !) Github Repository
+- to
+  - Email: **sidbentifraouine@gmail.com**
+  - Subject: **FISA 3**
 
-mongoose.connect("mongodb://localhost:27017/test")
-
-const Kitten = mongoose.model("Kitten", { name: String })
-
-// Create
-app.post("/kittens", (req, res) => {
-  const kittenToSave = new Kitten(req.body)
-  kittenToSave.save().then((kitten) => res.json(kitten))
-})
-
-// Read All
-app.get("/kittens", async (req, res) => {
-  Kitten.find()
-    .then((kittens) => res.json(kittens))
-    .catch(() => res.status(404).end())
-})
-
-// Read one by ID
-app.get("/kittens/:id", async (req, res) => {
-  Kitten.findById(req.params.id)
-    .then((kitten) => res.json(kitten))
-    .catch(() => res.status(404).end())
-})
-
-// Update one by ID
-app.put("/kittens/:id", async (req, res) => {
-  Kitten.findByIdAndUpdate(req.params.id, req.body)
-    .then((kitten) => res.json(kitten))
-    .catch(() => res.status(404).end())
-})
-
-// Delete one by ID
-app.delete("/kittens/:id", async (req, res) => {
-  Kitten.findOneAndDelete(req.params.id)
-    .then((kitten) => res.json(kitten))
-    .catch(() => res.status(404).end())
-})
-
-app.get("*", (req, res) => {
-  res.status(404).end()
-})
-
-app.listen(3000)
-```
+**DATE_TO_BE_DEFINED is the DEADLINE ❌**
